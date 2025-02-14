@@ -1,0 +1,39 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+}
+
+.pointer {
+  @apply transition-transform duration-300 cursor-pointer hover:scale-110;
+}
+
+thead tr {
+  @apply border-b border-sidebar-hover dark:border-sidebar-dark-hover bg-sidebar dark:bg-sidebar-dark
+}
+
+tbody tr {
+  @apply border border-transparent;
+}
+
+th, td {
+  @apply px-2 py-1.5;
+}
+
+.swal2-confirm {
+  @apply bg-primary;
+}
+
+.swal2-cancel, .swal2-deny {
+  @apply bg-danger;
+}
