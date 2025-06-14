@@ -9,13 +9,19 @@ const props = defineProps<{
   paramsData: ParamsData
 }>();
 
-const text = ref<string>('')
+const text = ref<string>('');
+const lastText = ref<string>('');
+
 let timeout : ReturnType<typeof setTimeout> | null = null;
 
 watch(text, () => {
   if (timeout) clearTimeout(timeout);
-  
+
   timeout = setTimeout(() => {
+    if(text.value === lastText.value){
+      return;
+    }
+    lastText.value = text.value;
     props.search({
       ...props.paramsData,
       search: text.value

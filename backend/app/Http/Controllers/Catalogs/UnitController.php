@@ -4,12 +4,12 @@ namespace App\Http\Controllers\Catalogs;
 
 use App\Helpers\ResponseManager;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Catalogs\Client\Store;
-use App\Http\Requests\Catalogs\Client\Update;
-use App\Models\Client;
+use App\Http\Requests\Catalogs\Unit\Store;
+use App\Http\Requests\Catalogs\Unit\Update;
+use App\Models\Unit;
 use Illuminate\Http\Request;
 
-class ClientController extends Controller
+class UnitController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,10 +20,10 @@ class ClientController extends Controller
         $perPage = $request->per_page;
         $orderBy = $request->order_by;
 
-        $clients = Client::query();
+        $units = Unit::query();
 
         if ($search && $search != '') {
-            $clients = $clients
+            $units = $units
                 ->where('code', 'like', '%' . $search . '%')
                 ->orWhere('name', 'like', '%' . $search . '%')
                 ->orWhere('lastname', 'like', '%' . $search . '%')
@@ -31,7 +31,7 @@ class ClientController extends Controller
                 ->orWhere('phone', 'like', '%' . $search . '%');
         }
 
-        return $clients->orderBy($orderBy ?? 'created_At', 'desc')->paginate($perPage);
+        return $units->orderBy($orderBy ?? 'created_At', 'desc')->paginate($perPage);
     }
 
     /**
@@ -40,14 +40,11 @@ class ClientController extends Controller
     public function store(Store $request)
     {
         try {
-            $client = Client::create([
-                'name' => $request->name,
-                'lastname' => $request->lastname,
-                'email' => $request->email,
-                'phone' => $request->phone,
+            $unit = Unit::create([
+                'name' => $request->name
             ]);
             return ResponseManager::success('Cliente creado correctamente', [
-                'client' => $client
+                'unit' => $unit
             ]);
         } catch (\Throwable $th) {
             return ResponseManager::error($th->getMessage());
@@ -60,12 +57,12 @@ class ClientController extends Controller
     public function show(string $id)
     {
         try {
-            $client = Client::find($id);
-            if (!$client) {
+            $unit = Unit::find($id);
+            if (!$unit) {
                 throw new \Exception("Cliente no encontrado", 404);
             }
             return ResponseManager::success('Cliente obtenido correctamente', [
-                'client' => $client
+                'unit' => $unit
             ]);
         } catch (\Throwable $th) {
             return ResponseManager::error($th->getMessage());
@@ -79,18 +76,15 @@ class ClientController extends Controller
     public function update(Update $request, string $id)
     {
         try {
-            $client = Client::find($id);
-            if(!$client) throw new \Exception("No se encontro el cliente", 404);
+            $unit = Unit::find($id);
+            if(!$unit) throw new \Exception("No se encontro el cliente", 404);
 
-            $client->update([
-                'name' => $request->name,
-                'lastname' => $request->lastname,
-                'email' => $request->email,
-                'phone' => $request->phone,
+            $unit->update([
+                'name' => $request->name
             ]);
 
             return ResponseManager::success('Cliente actualizado correctamente', [
-                'client' => $client
+                'unit' => $unit
             ]);
         } catch (\Throwable $th) {
             return ResponseManager::error($th->getMessage());
@@ -103,15 +97,14 @@ class ClientController extends Controller
     public function destroy(string $id)
     {
         try {
-            $client = Client::find($id);
-            if (!$client) {
+            $unit = Unit::find($id);
+            if (!$unit) {
                 throw new \Exception("Cliente no encontrada", 404);
             }
-            $client->delete();
+            $unit->delete();
             return ResponseManager::success('Cliente eliminada correctamente');
         } catch (\Throwable $th) {
             return ResponseManager::error($th->getMessage());
         }
     }
-
 }

@@ -9,6 +9,11 @@ import { createRouter, createWebHistory } from 'vue-router'
 import { useUser } from './stores/useUser'
 import ResetPassword from './views/Auth/ResetPassword.vue'
 import Client from './views/Catalogs/Client.vue'
+import Unit from './views/Catalogs/Unit.vue'
+import Measure from './views/Catalogs/Measure.vue'
+import { useSidebar } from './stores/useSidebar'
+import Index from './views/Works/Index.vue'
+import Create from './views/Works/Create.vue'
 
 const routes = [
   {
@@ -75,7 +80,7 @@ const routes = [
         }
       },
       {
-        path: '/clientes',
+        path: '/catalogos/clientes',
         name: 'Clientes',
         component: Client,
         meta: {
@@ -83,7 +88,47 @@ const routes = [
           icon: 'user-group',
           auth: true
         }
-      }
+      },
+      {
+        path: '/catalogos/unidades',
+        name: 'Unidades de medida',
+        component: Unit,
+        meta: {
+          title: 'Unidades de medida',
+          icon: 'ruler-horizontal',
+          auth: true
+        }
+      },
+      {
+        path: '/catalogos/medidas/:client_id',
+        name: 'Medidas',
+        component: Measure,
+        meta: {
+          title: 'Medidas del cliente',
+          icon: 'ruler-combined',
+          auth: true
+        }
+      },
+      {
+        path: '/trabajos',
+        name: 'Trabajos',
+        component: Index,
+        meta: {
+          title: 'Trabajos',
+          icon: 'list',
+          auth: true
+        }
+      },
+      {
+        path: '/trabajos/nuevo',
+        name: 'NuevoTrabajo',
+        component: Create,
+        meta: {
+          title: 'Nuevo Trabajo',
+          icon: 'list',
+          auth: true
+        }
+      },
     ]
   }
 ]
@@ -97,6 +142,7 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
+  useSidebar().setTabName(null);
   document.title = `${to.meta.title}` || import.meta.env.APP_NAME;
   const token = useUser().user.token;
   if (to.meta.guest && token) {

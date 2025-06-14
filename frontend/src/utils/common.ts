@@ -25,3 +25,4 @@ export const getParamsData = (data: ParamsData, paramsData: ParamsData) => {
   params.page = params.current_page; 
   return params;
 }
+ 

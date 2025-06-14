@@ -35,8 +35,18 @@ import {
   faChevronLeft,
   faChevronRight,
   faAnglesLeft,
-  faAngleRight,
-  faAnglesRight
+  faAnglesRight,
+  faRulerCombined,
+  faRulerHorizontal,
+  faWarning,
+  faClipboardList,
+  faList,
+  faCalendarAlt,
+  faScissors,
+  faDollar,
+  faDollarSign,
+  faFilterCircleDollar,
+  faCircleDollarToSlot
 } from '@fortawesome/free-solid-svg-icons'
 
 // Add icons to the library
@@ -73,7 +83,15 @@ library.add(
   faChevronLeft,
   faChevronRight,
   faAnglesLeft,
-  faAnglesRight
+  faAnglesRight,
+  faRulerHorizontal,
+  faRulerCombined,
+  faWarning,
+  faClipboardList,
+  faList,
+  faCalendarAlt,
+  faScissors,
+  faCircleDollarToSlot,
 )
 
 // Export FontAwesomeIcon to use in main.js

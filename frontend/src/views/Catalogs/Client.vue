@@ -6,6 +6,7 @@ import Actions from '@/components/Tables/Actions.vue'
 import BodyTr from '@/components/Tables/BodyTr.vue'
 import Container from '@/components/Tables/Container.vue'
 import Pagination from '@/components/Tables/Pagination.vue'
+import router from '@/router'
 import { deleteClientService, getClientsService } from '@/services/Catalogs/clientService'
 import { defaultClient, type Client } from '@/types/Catalogs'
 import { defaultParamsData, type Loading, type ParamsData } from '@/types/Commons'
@@ -25,14 +26,15 @@ const loading = ref<Loading>({
 const client = ref<Client>(clone(defaultClient));
 
 const isOpen = ref<boolean>(false);
+const measuresModal = ref<boolean>(false);
 
 const newClient = () => {
   client.value = clone(defaultClient);
   isOpen.value = true;
 }
 
-const saveClient = (client: Client) => {
-  client.id ? updateClient(client) : addClient(client);
+const saveClient = (client: Client, isUpdate = false) => {
+  isUpdate ? updateClient(client) : addClient(client);
 }
 
 const addClient = (client: Client) => {
@@ -46,6 +48,15 @@ const editClient = (clientToEdit: Client) => {
   client.value = clone(clientToEdit);
   isOpen.value = true;
 }
+
+const showMeasures = (client_id: string) => {
+  router.push({
+    name: 'Medidas',
+    params: {
+      client_id: client_id
+    }
+  })
+}
  
 const updateClient = (client: Client) => {
   clients.value = clients.value.map(c => c.id === client.id ? client : c);
@@ -56,6 +67,9 @@ const updateClient = (client: Client) => {
 
 const deleteClient = async (clientToDelete: Client) => {
   if (!await confirmNotification("Estas seguro de realizar esta acción?", "", "Si, eliminar.")) {
+    return;
+  }
+  if(!clientToDelete.id){
     return;
   }
   const { data } = await deleteClientService(clientToDelete.id);
@@ -106,7 +120,8 @@ onMounted(() => {
         <BodyTr v-for="client in filteredClients" :key="client.code" :id="`client-${client.id}`" @dblclick="editClient(client)">
           <Actions :actions="[
             { icon: 'edit', onClick: () => { editClient(client) } },
-            { icon: 'trash', onClick: () => { deleteClient(client) } }
+            { icon: 'trash', onClick: () => { deleteClient(client) } },
+            { icon: 'clipboard-list', onClick: () => { showMeasures(client.id ?? '') } },
           ]" />
           <td>{{ client.code }}</td>
           <td>{{ client.name }}</td>

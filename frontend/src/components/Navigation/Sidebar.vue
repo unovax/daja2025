@@ -20,9 +20,19 @@ const links = [
       {
         title: 'Clientes',
         icon: 'user-group',
-        to: '/clientes'
+        to: '/catalogos/clientes'
+      },
+      {
+        title: 'Unidades',
+        icon: 'ruler-horizontal',
+        to: '/catalogos/unidades'
       },
     ]
+  },
+  {
+    title: 'Trabajos',
+    icon: 'list',
+    to: '/trabajos'
   },
   {
     title: 'Reportes',
@@ -30,12 +40,12 @@ const links = [
       {
         title: 'Inventario por categorias',
         icon: 'file-lines',
-        to: '/clientes'
+        to: '/catalogos/clientes'
       },
       {
         title: 'Inventario por productos',
         icon: 'file-lines',
-        to: '/clientes'
+        to: '/catalogos/clientes'
       }
     ]
   }

@@ -50,7 +50,7 @@ const pages = computed(() => {
         <option value="100">100</option>
         <option value="200">200</option>
       </select>
-      <span class="text-xs">Mostrando {{ paramsData.from }} al {{ paramsData.to }} de {{ paramsData.total }}</span>
+      <span class="text-xs">Mostrando {{ paramsData.from ?? 0 }} al {{ paramsData.to ?? 0 }} de {{ paramsData.total ?? 0 }}</span>
     </div>
     <div class="flex flex-wrap space-x-2">
       <button

@@ -23,3 +23,8 @@ export const deleteClientService = async(id: string) =>  {
     const response = await apiClient.delete(`clients/${id}`);
     return response;
 }
+
+export const getClientService = async(id: string) => {
+    const response = await apiClient.get(`clients/${id}`);
+    return response;
+}

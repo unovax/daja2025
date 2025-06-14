@@ -15,7 +15,7 @@ const props = defineProps<{
     client: Client,
     isOpen: boolean,
     close: Function,
-    onSuccess: (client: Client) => void
+    onSuccess: (client: Client, isUpdate: boolean) => void
 }>();
 
 const loading = ref<Loading>({
@@ -23,6 +23,7 @@ const loading = ref<Loading>({
     text: 'Guardando...'
 });
 
+const isUpdate = ref<boolean>(false);
 const client = ref<Client>(clone(props.client));
 
 const rules = {
@@ -42,7 +43,7 @@ const saveClient = async () => {
         if (data.error) {
             errorNotification(data.message, data.errors);
         }
-        props.onSuccess(data.data.client);
+        props.onSuccess(data.data.client, isUpdate.value);
         client.value = clone(defaultClient);
     } catch (error: any) {
         errorNotification('No se pudo completar el inicio de sesión. Intenta nuevamente más tarde.', error.response.data);
@@ -61,6 +62,7 @@ watch(() => props.isOpen, (newVal) => {
     if (newVal) {
         client.value = clone(props.client);
         v$.value.$reset();
+        isUpdate.value = Boolean(client.value.id)
     }
 });
 
@@ -69,10 +71,10 @@ watch(() => props.isOpen, (newVal) => {
 <template>
     <Modal :isOpen="isOpen" :close="closeModal" title="Nuevo cliente">
         <form class="p-2 space-y-2">
-            <Input :error="v$.name.$errors[0]" v-model="client.name" icon="user" placeholder="Nombre" />
-            <Input :error="v$.lastname.$errors[0]" v-model="client.lastname" icon="id-badge" placeholder="Apellido" />
-            <Input :error="v$.email.$errors[0]" v-model="client.email" icon="envelope" placeholder="Correo electronico" />
-            <Input :error="v$.phone.$errors[0]" v-model="client.phone" icon="phone" placeholder="Telefono" />
+            <Input :error="v$.name.$errors[0]" v-model="client.name" icon="user" label="Nombre" placeholder="Ingresa el nombre del cliente" />
+            <Input :error="v$.lastname.$errors[0]" v-model="client.lastname" icon="id-badge" label="Apellido" placeholder="Ingresa el apellido del cliente" />
+            <Input :error="v$.email.$errors[0]" v-model="client.email" icon="envelope" label="Correo electronico" placeholder="Ingresa el correo electronico del cliente" />
+            <Input :error="v$.phone.$errors[0]" v-model="client.phone" icon="phone" label="Telefono" placeholder="Ingresa el telefono del cliente" />
         </form>
         <template #footer>
             <PrimaryButton :loading="loading" @click="saveClient" text="Guardar" icon="save" />

@@ -1,9 +1,8 @@
 <script lang="ts" setup>
 import type { Loading } from '@/types/Commons'
-import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 defineProps<{
-  text: string
+  text?: string
   icon?: string
   loading?: Loading
 }>()
@@ -18,8 +17,10 @@ defineProps<{
       <span>{{ text }}</span>
     </span>
     <span v-else class="flex items-center gap-2">
-      <font-awesome-icon :icon="faSpinner" class="animate-spin"/>
+      <font-awesome-icon icon="spinner" class="animate-spin"/>
       <span>{{ loading.text }}</span>
     </span>
+    <slot></slot>
   </button>
 </template>
+

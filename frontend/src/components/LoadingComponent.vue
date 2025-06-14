@@ -5,7 +5,7 @@
     }>();
 </script>
 <template>
-    <div class="flex items-center justify-center gap-2 p-4">
+    <div class="flex items-center justify-center w-full gap-2 p-4">
         <font-awesome-icon  :icon="icon ?? 'spinner'" class="animate-spin"/>
         <span>{{ text }}</span>
     </div>

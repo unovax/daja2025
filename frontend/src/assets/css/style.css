@@ -37,3 +37,7 @@ th, td {
 .swal2-cancel, .swal2-deny {
   @apply bg-danger;
 }
+
+button {
+  @apply min-h-[36px]
+}

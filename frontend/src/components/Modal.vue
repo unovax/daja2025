@@ -12,7 +12,7 @@ defineProps<{
 <template>
     <Teleport to="body">
         <Transition>
-            <div v-if="isOpen" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+            <div v-if="isOpen" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-[1000]">
                 <div class="overflow-hidden rounded-lg shadow-lg bg-sidebar dark:bg-sidebar-dark w-96">
                     <div class="flex items-center justify-between px-4 py-2 bg-primary text-light">
                         <h2 class="text-lg font-semibold">{{ title }}</h2>

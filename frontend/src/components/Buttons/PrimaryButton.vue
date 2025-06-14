@@ -20,6 +20,7 @@ defineProps<{
       <font-awesome-icon icon="spinner" class="animate-spin"/>
       <span>{{ loading.text }}</span>
     </span>
+    <slot></slot>
   </button>
 </template>
 
